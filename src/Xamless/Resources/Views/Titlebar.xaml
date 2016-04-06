@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="Xamless.Resources.Views.Titlebar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:Xamless.Resources.Converters"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <cmd:EventToCommand Command="{Binding TitlebarDragCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="MouseDoubleClick">
+            <cmd:EventToCommand Command="{Binding TitlebarDoubleClickCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:ValueConverterChain x:Key="InvertedBooleanToVisibilityConverter">
+            <converters:InvertedBooleanConverter />
+            <converters:BooleanToVisibilityConverter />
+        </converters:ValueConverterChain>
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0" Text="{Binding Path=WindowTitle}" Style="{StaticResource WindowTitle}"></TextBlock>
+
+        <Grid Grid.Column="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Style="{StaticResource MinimizeButton}" Width="30" Height="30" Command="{Binding Path=MinimizeClickCommand}"></Button>
+
+            <Button Visibility="{Binding Path=IsMaximized, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" Grid.Column="1" Style="{StaticResource MaximizeButton}" Width="30" Height="30" Command="{Binding Path=MaximizeClickCommand}"></Button>
+
+            <Button Visibility="{Binding Path=IsMaximized, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Style="{StaticResource WindowButton}" Width="30" Height="30" Command="{Binding Path=WindowClickCommand}"></Button>
+
+            <Button Grid.Column="2" Style="{StaticResource CloseButton}" Width="30" Height="30" Command="{Binding Path=CloseClickCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"></Button>
+
+        </Grid>
+        
+    </Grid>
+
+</UserControl>
