@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:Xamless.Resources.Views"
         mc:Ignorable="d"
         Title="{Binding Path=WindowTitle}" WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="False"
-        WindowStartupLocation="CenterScreen" WindowState="Normal"
+        WindowStartupLocation="CenterScreen" WindowState="{Binding Path=WindowState}"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
 
     <Grid>
