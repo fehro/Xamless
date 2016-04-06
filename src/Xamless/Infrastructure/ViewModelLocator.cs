@@ -13,16 +13,6 @@ namespace Xamless.Infrastructure
             SimpleIoc.Default.Register<MainViewModel>();
         }
 
-        public MainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
-        
-        public static void Cleanup()
-        {
-        }
+        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
     }
 }

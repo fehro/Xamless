@@ -14,7 +14,7 @@ namespace Xamless
     {
         #region Global Variables / Properties
 
-        private string _selfHostingListenPort;
+        private readonly string _selfHostingListenPort;
 
         #endregion
 
@@ -52,13 +52,16 @@ namespace Xamless
 
             try
             {
-                //Enable the static files configuration.
                 var selfHostingListenPort = Convert.ToInt32(_selfHostingListenPort);
-                WebApp.Start<OwinStaticFilesConfig>($"http://localhost:{selfHostingListenPort}/");
+
+                //Enable the static files configuration.
+                WebApp.Start<OwinApiConfig>($"http://localhost:{selfHostingListenPort}/");
             }
             catch (Exception ex)
             {
                 //Exception.
+
+                //todo: report this somewhere.
             }
 
         }
